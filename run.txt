@@ -1,0 +1,8 @@
+fenicsproject run quay.io/dolfinadjoint/pyadjoint:latest
+
+pip install --user nibabel
+
+python3 compute_ocd_reduced.py ludmil/PatID-XXX 1/2/4 1e-4/1e-1 0h/6h/24h false \ 
+                              FIGURES_CONC_LUT > log.txt
+
+# Input: Patient, resolution, regularization, time, dti, figure folder
