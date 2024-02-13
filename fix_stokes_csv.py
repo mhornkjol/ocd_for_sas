@@ -4,8 +4,8 @@ import csv
 import os
 
 patient = "PatID-004_cut"
-imgs = ["not_scaled_z_vel", "not_scaled_stokes_vel"]
-nums = ["4"]
+imgs = ["not_scaled_z_vel_noise_10"]
+nums = ["1", "2", "4"]
 
 
 def compute_magnitude_field(phi):
@@ -70,7 +70,7 @@ for num in nums:
             folder_name = "%s/saga_files/%s/pat_%s_n_%s_beta_1_key_%s_disp_1_method_ocdr_stokes" \
                               % (patient, img, patient, num, dt)
             
-            with open(os.path.join(folder_name, "optimization_values.csv"), "r") as infile, open(os.path.join(folder_name, "optimization_values_2.csv"), "w") as outfile:
+            with open(os.path.join(folder_name, "optimization_values_old.csv"), "r") as infile, open(os.path.join(folder_name, "optimization_values_2.csv"), "w") as outfile:
                 reader = csv.reader(infile)
                 writer = csv.writer(outfile)
                 # next(reader, None)
@@ -82,10 +82,19 @@ for num in nums:
                     else:
                         z_val = Constant(row[3])
 
-                        new_phi = project(z_val*phi, O, solver_type='mumps')
-                        # Should this be magnitude?
-                        mphi = new_phi.vector().max()
-                        aphi = bar(new_phi)
+                        if num == "4":
+                            factor_max = 0.000017199
+                            factor_avg = 0.000002383
+
+                            mphi = z_val.values()[0]*factor_max
+                            aphi = z_val.values()[0]*factor_avg
+
+                        else:
+                            new_phi = project(z_val*phi, O, solver_type='mumps')
+                            # Should this be magnitude?
+                            mphi = compute_magnitude_field(new_phi)
+                            mphi = mphi.vector().max()
+                            aphi = bar(new_phi)
                         
                         new_row = row
                         new_row[3] = mphi
@@ -99,7 +108,7 @@ for num in nums:
                 folder_name = "%s/saga_files/%s/pat_%s_n_%s_beta_1_dt_%s_disp_1_method_ocdr_stokes" \
                               % (patient, img, patient, num, dt)
 
-                with open(os.path.join(folder_name, "optimization_values.csv"), "r") as infile, open(os.path.join(folder_name, "optimization_values_2.csv"), "w") as outfile:
+                with open(os.path.join(folder_name, "optimization_values_old.csv"), "r") as infile, open(os.path.join(folder_name, "optimization_values_2.csv"), "w") as outfile:
                     reader = csv.reader(infile)
                     writer = csv.writer(outfile)
                     # next(reader, None)
@@ -111,10 +120,19 @@ for num in nums:
                         else:
                             z_val = Constant(row[3])
 
-                            new_phi = project(z_val*phi, O, solver_type='mumps')
-                            mphi = new_phi.vector().max()
-                            aphi = bar(new_phi)
-                            
+                            if num == "4":
+                                factor_max = 0.000017199
+                                factor_avg = 0.000002383
+
+                                mphi = z_val.values()[0]*factor_max
+                                aphi = z_val.values()[0]*factor_avg
+
+                            else:
+                                new_phi = project(z_val*phi, O, solver_type='mumps')
+                                mphi = compute_magnitude_field(new_phi)
+                                mphi = mphi.vector().max()
+                                aphi = bar(new_phi)
+                                
                             new_row = row
                             new_row[3] = mphi
                             new_row[4] = aphi

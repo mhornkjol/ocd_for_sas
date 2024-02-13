@@ -1,6 +1,6 @@
 patient="PatID-004_cut"
 method="ocdr_stokes"
-img="not_scaled_stokes_vel"
+img="not_scaled_z_vel_noise_10"
 
 
 if [ "${img}" = "data" ]
@@ -8,13 +8,13 @@ then
     # DATA
     declare -a dts=("0h")
     declare -a betas=(1) # betas=(1e-2 1e-4 1e-6)
-    declare -a resolution=(1 2) # resolution=(1 2 4)
+    declare -a resolution=(1 2 4)
     declare -a dispersion=(1)
 else
     # Manufactured
     declare -a dts=("0_42" "0_83" "0_125" "0_165")
     declare -a betas=(1) # betas=(1e-4 1e-5 1e-6)
-    declare -a resolution=(1 2) # resolution=(1 2 4)
+    declare -a resolution=(1 2 4)
     declare -a dispersion=(1)
 fi
 

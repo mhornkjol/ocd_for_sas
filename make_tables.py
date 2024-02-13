@@ -8,7 +8,7 @@ imgs = ["data", "z_vel", "stokes_vel", "z_vel_noise_10"]
 methods = ["ocdr", "ocdr_z_vel", "omt", "ocdr_stokes"]
 
 print("The true max velocity for the manufactured solutions is: 20 mm/h")
-print("The true average velocity for the manufactured stokes solutions is: 0.71992647119458 mm/h")
+print("The true average velocity for the manufactured stokes solutions is: 2.7716195960520817 mm/h")
 
 
 for i, patient in enumerate(patients):
@@ -18,8 +18,8 @@ for i, patient in enumerate(patients):
     for j, img in enumerate(imgs):
         print("#########################################")
         print("###    %s.%s  Problem: %s             ###" % (i+1, j+1, img))
-        if img == "z_vel_noise_10":
-            methods = ["ocdr", "ocdr_z_vel", "omt"]
+        # if img == "z_vel_noise_10":
+        #     methods = ["ocdr", "ocdr_z_vel", "omt"]
         print("#########################################")
         for k, method in enumerate(methods):
             print("#########################################")
@@ -34,7 +34,6 @@ for i, patient in enumerate(patients):
                 resolutions = ["1", "2", "4"]
                 if method == "ocdr_stokes":
                     alphas = ["1"]
-                    resolutions = ["1", "2"]
                 else:
                     alphas = ["1e-2", "1e-4", "1e-6"]
                 dt = "0h"
@@ -76,6 +75,7 @@ for i, patient in enumerate(patients):
                     print("--------------------------")
                     print("1           %0.2f" % (mphis[0]))
                     print("2           %0.2f" % (mphis[1]))
+                    print("4           %0.2f" % (mphis[2]))
 
                     print("\n")
 
@@ -84,6 +84,7 @@ for i, patient in enumerate(patients):
                     print("--------------------------")
                     print("1           %0.2f" % (aphis[0]))
                     print("2           %0.2f" % (aphis[1]))
+                    print("4           %0.2f" % (aphis[2]))
 
                     print("\n")
 
@@ -92,6 +93,7 @@ for i, patient in enumerate(patients):
                     print("--------------------------")
                     print("1           %0.2f" % (j_reduc[0]))
                     print("2           %0.2f" % (j_reduc[1]))
+                    print("4           %0.2f" % (j_reduc[2]))
 
                     print("\n")
                 
@@ -158,11 +160,12 @@ for i, patient in enumerate(patients):
                 resolutions = ["1", "2", "4"]
                 if method == "ocdr_stokes":
                     alphas = ["1"]
-                    resolutions = ["1", "2"]
                     if img == "z_vel":
                         img = "not_scaled_z_vel"
                     elif img == "stokes_vel":
                         img = "not_scaled_stokes_vel"
+                    elif img == "z_vel_noise_10":
+                        img = "not_scaled_z_vel_noise_10"
                 else:
                     alphas = ["1e-4", "1e-5", "1e-6"]
                 dts = ["0_42", "0_83", "0_125", "0_165"]
@@ -295,6 +298,7 @@ for i, patient in enumerate(patients):
                     print("--------------------------")
                     print("1           %0.2f %0.2f %0.2f %0.2f" % (mphis[0], mphis[1], mphis[2], mphis[3]))
                     print("2           %0.2f %0.2f %0.2f %0.2f" % (mphis[4], mphis[5], mphis[6], mphis[7]))
+                    print("4           %0.2f %0.2f %0.2f %0.2f" % (mphis[8], mphis[9], mphis[10], mphis[11]))
 
                     print("\n")
 
@@ -303,6 +307,7 @@ for i, patient in enumerate(patients):
                     print("--------------------------")
                     print("1           %0.2f %0.2f %0.2f %0.2f" % (aphis[0], aphis[1], aphis[2], aphis[3]))
                     print("2           %0.2f %0.2f %0.2f %0.2f" % (aphis[4], aphis[5], aphis[6], aphis[7]))
+                    print("4           %0.2f %0.2f %0.2f %0.2f" % (aphis[8], aphis[9], aphis[10], aphis[11]))
 
                     print("\n")
 
@@ -311,6 +316,7 @@ for i, patient in enumerate(patients):
                     print("--------------------------")
                     print("1           %0.2f %0.2f %0.2f %0.2f" % (j_reduc[0], j_reduc[1], j_reduc[2], j_reduc[3]))
                     print("2           %0.2f %0.2f %0.2f %0.2f" % (j_reduc[4], j_reduc[5], j_reduc[6], j_reduc[7]))
+                    print("4           %0.2f %0.2f %0.2f %0.2f" % (j_reduc[8], j_reduc[9], j_reduc[10], j_reduc[11]))
 
                     print("\n")
 
